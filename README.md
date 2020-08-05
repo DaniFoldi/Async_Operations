@@ -14,7 +14,7 @@ Then import it as usual with `#import <Async_Operations.h>`
 ## Basic usage
 
 #### Deferred execution
-```
+```c++
 #import <Async_Operations.h>
 
 long long dt = {1000};
@@ -37,7 +37,7 @@ void loop() {
 
 #### Blinking LED
 
-```
+```c++
 #import <Async_Operations.h>
 
 long long dt = {500, 500};
@@ -54,7 +54,7 @@ void loop() {
 
 #### Timeout handler
 
-```
+```c++
 #import <Async_Operations.h>
 
 long long dt = {10000};

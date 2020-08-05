@@ -1,0 +1,12 @@
+Async_Operations	KEYWORD1
+start	KEYWORD2
+restart KEYWORD2
+pause KEYWORD2
+play	KEYWORD2
+getPaused KEYWORD2
+getRunning KEYWORD2
+update KEYWORD2
+setStateChangeCallback KEYWORD2
+setLoopCallback KEYWORD2
+deleteStateChangeCallback KEYWORD2
+deleteLoopCallback KEYWORD2

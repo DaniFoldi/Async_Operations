@@ -13,70 +13,70 @@ Then import it as usual with `#import <Async_Operations.h>`
 
 ## Basic usage
 
-#### Deferred execution
+#### Delayed execution
 ```c++
-#import <Async_Operations.h>
+#include <Async_Operations.h>
 
 long long dt = {1000};
-Async_Operations delayed(dt, 1, 1);
+Async_Operations delayed(&dt, 1, 1);
 
 void setup() {
-    pinMode(LED_BUILTIN, OUTPUT);
-    delayed.setLoopCallback(&cb);
-    delayed.start();
+  pinMode(LED_BUILTIN, OUTPUT);
+  delayed.setLoopCallback(&cb);
+  delayed.start();
 }
 
 void cb() {
-    digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void loop() {
-    delayed.update();
+  delayed.update();
 }
 ```
 
 #### Blinking LED
 
 ```c++
-#import <Async_Operations.h>
+#include <Async_Operations.h>
 
 long long dt = {500, 500};
-Async_Operations blinker(dt, 2, -1, LED_BUILTIN);
+Async_Operations blinker(&dt, 2, -1, LED_BUILTIN);
 
 void setup() {
-    blinker.start();
+  blinker.start();
 }
 
 void loop() {
-    blinker.update();
+  blinker.update();
 }
 ```
 
 #### Timeout handler
 
 ```c++
-#import <Async_Operations.h>
+#include <Async_Operations.h>
 
 long long dt = {10000};
-Async_Operations handler(dt, 1, 1);
+Async_Operations handler(&dt, 1, 1);
 
 bool waiting = false;
 int buttonPin = 10;
 
 void setup() {
-    handler.setLoopCallback(&resetWaiting)
-    pinMode(buttonPin, INPUT_PULLUP);
+  handler.setLoopCallback(&resetWaiting);
+  pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void resetWaiting() {
-    waiting = false;
+  waiting = false;
 }
 
 void loop() {
-    if (digitalRead(buttonPin) == LOW) {
-        waiting = true;
-        handler.restart();
-    }
+  if (digitalRead(buttonPin) == LOW) {
+    waiting = true;
+    handler.restart();
+  }
 }
 ```
 

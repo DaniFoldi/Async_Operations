@@ -1,7 +1,7 @@
 #include <Async_Operations.h>
 
 long long dt = {10000};
-Async_Operations handler(dt, 1, 1);
+Async_Operations handler(&dt, 1, 1);
 
 bool waiting = false;
 int buttonPin = 10;

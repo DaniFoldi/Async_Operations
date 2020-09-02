@@ -1,18 +1,12 @@
 #include <Async_Operations.h>
 
-long long dt = {1000};
-Async_Operations delayed(dt, 1, 1);
+long long dt = {500, 500};
+Async_Operations blinker(&dt, 2, -1, LED_BUILTIN);
 
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
-  delayed.setLoopCallback(&cb);
-  delayed.start();
-}
-
-void cb() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  blinker.start();
 }
 
 void loop() {
-  delayed.update();
+  blinker.update();
 }

@@ -17,8 +17,8 @@ Then import it as usual with `#import <Async_Operations.h>`
 ```c++
 #include <Async_Operations.h>
 
-long long dt = {1000};
-Async_Operations delayed(&dt, 1, 1);
+long long dt[] = {1000};
+Async_Operations delayed(dt, 1, 1);
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -40,8 +40,8 @@ void loop() {
 ```c++
 #include <Async_Operations.h>
 
-long long dt = {500, 500};
-Async_Operations blinker(&dt, 2, -1, LED_BUILTIN);
+long long dt[] = {500, 500};
+Async_Operations blinker(dt, 2, -1, LED_BUILTIN);
 
 void setup() {
   blinker.start();
@@ -57,8 +57,8 @@ void loop() {
 ```c++
 #include <Async_Operations.h>
 
-long long dt = {10000};
-Async_Operations handler(&dt, 1, 1);
+long long dt[] = {10000};
+Async_Operations handler(dt, 1, 1);
 
 bool waiting = false;
 int buttonPin = 10;

@@ -1,8 +1,8 @@
 #include <Async_Operations.h>
 
-long long dt[] = {1000};
-int step_count = sizeof(dt)/sizeof(dt[0]);
-Async_Operations delayed(dt, step_count, 1);
+long long steps[] = {1000};
+int step_count = sizeof(steps)/sizeof(steps[0]);
+Async_Operations delayed(steps, step_count, 1);
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);

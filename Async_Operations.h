@@ -29,22 +29,25 @@ class Async_Operations {
     void deleteStateChangeCallback();
     void setLoopCallback(void (*loopCallback)(void));
     void deleteLoopCallback();
-  private:
+  private:  // order as in constructor
     long long *steps;
     int stepCount;
     int step;
-    int pin;
-    bool running;
-    long long startTime;
-    long long lastUpdate;
-    long long remaining;
+    int pin               = -1;
+    bool running          = false;
+    long long startTime   = 0;
+    long long lastUpdate  = 0;
+    int initialRepeat     = 0;
+    bool initialState     = true;
+    bool endState         = false;
     bool state;
-    bool initialState;
-    bool endState;
     int repeat;
-    int initialRepeat;
-    void (*stateChangeCallback)(void);
-    void (*loopCallback)(void);
+    long long remaining;
+    void (*stateChangeCallback)(void) = nullptr;
+    void (*loopCallback)(void) = nullptr;
+
+
+
 };
 
 #endif

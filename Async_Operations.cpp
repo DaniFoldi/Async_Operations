@@ -5,38 +5,16 @@
 
 #include "Async_Operations.h"
 
+
 Async_Operations::Async_Operations(long long *steps, int stepCount) {
   this->steps = steps;
   this->stepCount = stepCount;
-  this->initialRepeat = 0;
-  this->pin = -1;
-  if (this->pin >= 0) {
-    pinMode(this->pin, OUTPUT);
-  }
-  this->initialState = true;
-  this->endState = false;
-  this->running = false;
-  this->startTime = 0;
-  this->lastUpdate = 0;
-  this->stateChangeCallback = 0;
-  this->loopCallback = 0;
 }
 
 Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat) {
   this->steps = steps;
   this->stepCount = stepCount;
   this->initialRepeat = repeat;
-  this->pin = -1;
-  if (this->pin >= 0) {
-    pinMode(this->pin, OUTPUT);
-  }
-  this->initialState = true;
-  this->endState = false;
-  this->running = false;
-  this->startTime = 0;
-  this->lastUpdate = 0;
-  this->stateChangeCallback = 0;
-  this->loopCallback = 0;
 }
 
 Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat, int pin) {
@@ -44,16 +22,6 @@ Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat, 
   this->stepCount = stepCount;
   this->initialRepeat = repeat;
   this->pin = pin;
-  if (this->pin >= 0) {
-    pinMode(this->pin, OUTPUT);
-  }
-  this->initialState = true;
-  this->endState = false;
-  this->running = false;
-  this->startTime = 0;
-  this->lastUpdate = 0;
-  this->stateChangeCallback = 0;
-  this->loopCallback = 0;
 }
 
 Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat, int pin, bool initialState) {
@@ -61,16 +29,7 @@ Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat, 
   this->stepCount = stepCount;
   this->initialRepeat = repeat;
   this->pin = pin;
-  if (this->pin >= 0) {
-    pinMode(this->pin, OUTPUT);
-  }
   this->initialState = initialState;
-  this->endState = false;
-  this->running = false;
-  this->startTime = 0;
-  this->lastUpdate = 0;
-  this->stateChangeCallback = 0;
-  this->loopCallback = 0;
 }
 
 Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat, int pin, bool initialState, bool endState) {
@@ -78,21 +37,14 @@ Async_Operations::Async_Operations(long long *steps, int stepCount, int repeat, 
   this->stepCount = stepCount;
   this->initialRepeat = repeat;
   this->pin = pin;
-  if (this->pin >= 0) {
-    pinMode(this->pin, OUTPUT);
-  }
   this->initialState = initialState;
   this->endState = endState;
-  this->running = false;
-  this->startTime = 0;
-  this->lastUpdate = 0;
-  this->stateChangeCallback = 0;
-  this->loopCallback = 0;
 }
 
 void Async_Operations::start() {
   this->startTime = millis();
   if (this->pin >= 0) {
+    pinMode(this->pin, OUTPUT);
     digitalWrite(this->pin, this->state);
   }
   this->lastUpdate = this->startTime;
@@ -138,6 +90,9 @@ void Async_Operations::update() {
   }
   long long currentTime = millis();
   while (this->lastUpdate + this->remaining < currentTime) {
+    if (this->loopCallback) {
+      this->loopCallback();
+    }
     this->step++;
     if (this->step >= this->stepCount) {
       this->step = 0;
@@ -152,10 +107,8 @@ void Async_Operations::update() {
         }
         return;
       }
-      if (this->loopCallback) {
-        this->loopCallback();
-      }
     }
+
     this->lastUpdate += this->remaining;
     this->remaining = this->steps[this->step];
     this->state = !this->state;
